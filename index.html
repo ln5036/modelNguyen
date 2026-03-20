@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
 
-  <!-- Load đúng -->
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.6.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.4"></script>
 </head>
 
 <body>
@@ -23,7 +22,7 @@ async function init() {
   await webcam.setup();
   await webcam.play();
 
-  document.body.appendChild(webcam.canvas);
+  document.getElementById("webcam-container").appendChild(webcam.canvas);
 }
 </script>
 
