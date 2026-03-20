@@ -2,9 +2,8 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>AI Test</title>
 
-  <!-- Load đúng thứ tự -->
+  <!-- Load đúng -->
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest"></script>
 </head>
@@ -13,50 +12,18 @@
 
 <button onclick="init()">Start</button>
 <div id="webcam-container"></div>
-<div id="label-container"></div>
 
 <script>
 const URL = "./";
 
-let model, webcam, labelContainer, maxPredictions;
-
 async function init() {
-    const modelURL = URL + "model.json";
-    const metadataURL = URL + "metadata.json";
+  const model = await tmImage.load(URL + "model.json", URL + "metadata.json");
 
-    model = await tmImage.load(modelURL, metadataURL);
+  const webcam = new tmImage.Webcam(200, 200, true);
+  await webcam.setup();
+  await webcam.play();
 
-    maxPredictions = model.getTotalClasses();
-
-    webcam = new tmImage.Webcam(200, 200, true);
-    await webcam.setup();
-    await webcam.play();
-
-    document.getElementById("webcam-container").appendChild(webcam.canvas);
-
-    labelContainer = document.getElementById("label-container");
-
-    for (let i = 0; i < maxPredictions; i++) {
-        labelContainer.appendChild(document.createElement("div"));
-    }
-
-    window.requestAnimationFrame(loop);
-}
-
-async function loop() {
-    webcam.update();
-    await predict();
-    window.requestAnimationFrame(loop);
-}
-
-async function predict() {
-    const prediction = await model.predict(webcam.canvas);
-
-    for (let i = 0; i < maxPredictions; i++) {
-        labelContainer.childNodes[i].innerHTML =
-            prediction[i].className + ": " +
-            prediction[i].probability.toFixed(2);
-    }
+  document.body.appendChild(webcam.canvas);
 }
 </script>
 
