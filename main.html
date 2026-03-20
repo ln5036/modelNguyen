@@ -3,25 +3,29 @@
 <head>
   <meta charset="UTF-8">
 
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.6.0"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.4"></script>
+  <!-- FIX: dùng version cố định + defer -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.6.0" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.4" defer></script>
 </head>
 
 <body>
 
-<h2>TEST</h2>
 <button onclick="init()">Start</button>
 <div id="webcam-container"></div>
 
 <script>
+const URL = "./";
+
 async function init() {
-  const model = await tmImage.load("./model.json", "./metadata.json");
+  console.log("tmImage:", typeof tmImage); // debug
+
+  const model = await tmImage.load(URL + "model.json", URL + "metadata.json");
 
   const webcam = new tmImage.Webcam(200, 200, true);
   await webcam.setup();
   await webcam.play();
 
-  document.body.appendChild(webcam.canvas);
+  document.getElementById("webcam-container").appendChild(webcam.canvas);
 }
 </script>
 
