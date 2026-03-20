@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.6.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.4"></script>
+</head>
+
+<body>
+
+<h2>TEST</h2>
+<button onclick="init()">Start</button>
+<div id="webcam-container"></div>
+
+<script>
+async function init() {
+  const model = await tmImage.load("./model.json", "./metadata.json");
+
+  const webcam = new tmImage.Webcam(200, 200, true);
+  await webcam.setup();
+  await webcam.play();
+
+  document.body.appendChild(webcam.canvas);
+}
+</script>
+
+</body>
+</html>
