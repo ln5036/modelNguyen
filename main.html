@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
 
-  <!-- FIX: dùng version cố định + defer -->
-  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.6.0" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8.4" defer></script>
+  <!-- FIX CDN -->
+  <script src="https://unpkg.com/@tensorflow/tfjs@4.6.0/dist/tf.min.js"></script>
+  <script src="https://unpkg.com/@teachablemachine/image@0.8.4/dist/teachablemachine-image.min.js"></script>
 </head>
 
 <body>
@@ -17,7 +17,12 @@
 const URL = "./";
 
 async function init() {
-  console.log("tmImage:", typeof tmImage); // debug
+  console.log("tmImage:", typeof tmImage);
+
+  if (typeof tmImage === "undefined") {
+    alert("tmImage chưa load!");
+    return;
+  }
 
   const model = await tmImage.load(URL + "model.json", URL + "metadata.json");
 
